@@ -55,6 +55,15 @@ namespace ams::controller {
 
         const char *controller_name = hos::GetVersion() < hos::Version_13_0_0 ? device->name.name : device->name2;
 
+        // Xbox One S/X controllers on BLE firmware revisions may not expose known classic HID product IDs.
+        // Match by Microsoft VID + known controller name prefix to map these devices to the XboxOne handler.
+        if (device->vid == 0x045e) {
+            if ((std::strncmp(controller_name, "Xbox Wireless Controller", std::strlen("Xbox Wireless Controller")) == 0) ||
+                (std::strncmp(controller_name, "Xbox Elite Wireless Controller", std::strlen("Xbox Elite Wireless Controller")) == 0)) {
+                return ControllerType_XboxOne;
+            }
+        }
+
         // Additionally check controller name against known official Nintendo controllers, as some controllers (eg. JoyCons paired via rails) don't report the correct vid/pid
         if (IsOfficialSwitchControllerName(controller_name))
             return ControllerType_Switch;
