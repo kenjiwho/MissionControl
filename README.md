@@ -38,7 +38,7 @@ Use controllers from other consoles natively on your Nintendo Switch via Bluetoo
 * __Sony DualShock4 (Playstation 4) Controller__
 * __Sony Dualsense (Playstation 5) Controller__
 * __Sony Dualsense Edge Controller__
-* __Microsoft Xbox One S/X Controller (not to be confused with Series S/X controllers - these use Bluetooth LE, which isn't currently supported)__*
+* __Microsoft Xbox One S/X Controller (including Bluetooth LE firmware variants in this fork; Series S/X remains unsupported)__*
 * __Microsoft Xbox Elite Wireless Controller Series 2__
 * __NVidia Shield Controller (2017 Model)__
 * __Ouya Controller__
@@ -126,7 +126,7 @@ If you have difficulty getting the controller to pair to the console, press and 
 ***Microsoft Xbox One/Elite 2 Controllers***
 Press and hold the `guide`(`X`) button until the LED starts blinking. Then press and hold the small sync button on the back near the charging port until the LED starts blinking more rapidly.
 
-*Note: controller firmware versions 5.xx.xxxx.x and upward use Bluetooth Low Energy and are not currently supported. Please refer to the [FAQ](#frequently-asked-questions) for instructions on downgrading to a compatible firmware*
+*Note: in this fork, Bluetooth LE firmware variants of Xbox One S/X controllers are supported. This does not include Xbox Series S/X controllers.*
 
 ***Other Controllers***
 Please refer to your controller's user manual for information on how to put it into sync mode. Note that many generic Bluetooth controllers can be started in one of several modes. Usually you want to choose something like HID, PC or Android mode for it to work correctly.
@@ -208,7 +208,7 @@ Below is a list of features I am currently working on or would like to look into
 ### Known Issues and Limitations
 
 * Non-Switch controllers cannot be used to wake the system from sleep.
-* Controllers using the Bluetooth LE (BLE) standard are currently not supported and will not connect to the system.
+* Most controllers using the Bluetooth LE (BLE) standard are not supported and will not connect to the system. (This fork adds support for Xbox One S/X BLE firmware variants.)
 * Some controllers can take some time to be detected and subsequently pair with the console. Be patient and re-enter the sync mode of the controller several times if neccessary. Once synced, controllers should connect and work as usual.
 * Xbox One controllers cannot be switched off via software and will attempt to reconnect to the console after being disconnected. This is a limitation of the controller's bluetooth firmware. To switch the controller off, the guide button must be held in for several seconds.
 * Reported controller battery levels may not be correct. I'm relying entirely on reverse engineering notes found on the internet for these. In many cases I don't own the controller and there is simply no information available, so these controllers will always show full battery. Any help in improving this is most welcome.
@@ -263,12 +263,12 @@ Your controller has successfully paired with the console but is being disconnect
 - Your controller's virtual memory file or the directory tree containing it has been corrupted. Try deleting the controller's config entry (`/config/MissionControl/controllers/<xxxxxxxxxxxx>/`, where `<xxxxxxxxxxxx>` is the 12-character hex representation of your controllers Bluetooth MAC address) and letting Mission Control create a new one. It may be necessary to delete the entire `controllers` directory in some cases. Note: you will lose any stored controller specific data such as user analog stick or motion calibrations when deleting these files. As this is the most destructive measure, you should attempt it last, after exhausting the suggestions above.
 
 ***My Xbox controller won't connect, I thought you said they were supported?***
-Although they may look similar, not all Xbox controllers are created equal. There are actually several hardware revisions/models available (7 at the time of writing) with varying wireless capabilites. On Xbox consoles (or PC with the wireless USB adapter) all controllers use a proprietary Microsoft wireless protocol known as GIP. Bluetooth connectivity, however, is _not_ the same thing and varies between controller models. Some support bluetooth, and some don't. Of those that do, some are using the newer (currently unsupported) Bluetooth Low Energy (LE) standard or will switch to it after a firmware update. **The only supported models are the 1708 (Xbox One S) and 1797 (Xbox Elite V2) revisions. If these have been updated to a Bluetooth LE firmware (5.xx.xxxx.x and above), you will need to downgrade the firmware to the legacy version (see below).**. Controller model numbers can be found on the inside of the battery compartment, or the back of the controller in controllers with an internal battery.
+Although they may look similar, not all Xbox controllers are created equal. There are actually several hardware revisions/models available (7 at the time of writing) with varying wireless capabilites. On Xbox consoles (or PC with the wireless USB adapter) all controllers use a proprietary Microsoft wireless protocol known as GIP. Bluetooth connectivity, however, is _not_ the same thing and varies between controller models. Some support bluetooth, and some don't. **The supported models are the 1708 (Xbox One S) and 1797 (Xbox Elite V2) revisions, including Bluetooth LE firmware variants (5.xx.xxxx.x and above) in this fork.** Controller model numbers can be found on the inside of the battery compartment, or the back of the controller in controllers with an internal battery.
 
 For more details on the various controller revisions (with images), see [here](https://en.wikipedia.org/wiki/Xbox_Wireless_Controller#Summary).
 
 ***My Xbox One/Elite V2 controller used to connect and now it doesn't, what gives?***
-As of late 2021, Microsoft introduced a new controller firmware that aims to bring Xbox One/Elite 2 controllers in line with the newer Series X|S controllers. Updating to this firmware switches the controller over to using Bluetooth Low Energy (LE), a newer bluetooth standard focused on low power consumption, which is not currently supported by Mission Control. If your controller firmware is version 5.xx.xxxx.x or above, you have the new LE firmware and will need to downgrade to the legacy one (see https://support.xbox.com/en-US/help/hardware-network/accessories/controller-firmware-reversion)
+As of late 2021, Microsoft introduced a new controller firmware that aims to bring Xbox One/Elite 2 controllers in line with the newer Series X|S controllers. Updating to this firmware switches the controller over to using Bluetooth Low Energy (LE), a newer bluetooth standard focused on low power consumption. This fork supports those LE firmware revisions for Xbox One S/Elite 2 (5.xx.xxxx.x and above), but Xbox Series X|S controllers remain unsupported.
 
 ***Can you add support for Xbox 360 controllers?***
 No, not currently. These don't use Bluetooth. Try sys-con with a wireless USB adapter.
